@@ -26,6 +26,10 @@ public class Game {
             switch (selectLoc){
                 case 1:
                     location = new SafeHouse(player);
+                    if(checkWin(player)){
+                        System.out.println("Tebrikler Oyunu Kazandınız!!");
+                        break;
+                    }
                     break;
                 case 2:
                     location = new ToolStore(player);
@@ -53,5 +57,10 @@ public class Game {
             }
         }
 
+    }
+    public boolean checkWin(Player player){
+        return player.getInventory().getWood().equals("Orman") &&
+                player.getInventory().getWater().equals("Su") &&
+                player.getInventory().getFood().equals("Yemek");
     }
 }

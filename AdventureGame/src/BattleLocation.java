@@ -14,6 +14,19 @@ public abstract class BattleLocation extends Location {
 
     @Override
     public boolean onLocation() {
+        if(this.getName().equals("Mağara") && this.getPlayer().getInventory().getFood().equals("Yemek")){
+            System.out.println("Mağara ödülünü aldınız, Tekrar mağaraya giremezsiniz");
+            return true;
+        }
+        if(this.getName().equals("Orman") && this.getPlayer().getInventory().getWood().equals("Odun")){
+            System.out.println("Orman ödülünü aldınız, Tekrar mağaraya giremezsiniz");
+            return true;
+        }
+        if(this.getName().equals("Nehir") && this.getPlayer().getInventory().getWater().equals("Su")){
+            System.out.println("Nehir ödülünü aldınız, Tekrar mağaraya giremezsiniz");
+            return true;
+        }
+
         int obsCount = this.randomObstacleCount();
         System.out.println("Şu an buradasınız :" + this.getName());
         System.out.println("Dikkatli ol burada " + obsCount + " tane " + this.getObstacle().getName() + " yaşıyor");
@@ -70,12 +83,20 @@ public abstract class BattleLocation extends Location {
                     return false;
                 }
             }
+
         }
 
         if (this.getObstacle().getHealth() < this.getPlayer().getHealth()) {
             System.out.println(this.getName() + " etabını geçtiniz .");
             System.out.println(this.getObstacle().getAward() + " altın kazandınız");
             this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
+            if(this.getName().equals("Mağara")){
+                this.getPlayer().getInventory().setFood(this.getAward());
+            }else if(this.getName().equals("Orman")){
+                this.getPlayer().getInventory().setWood(this.getAward());
+            }else{
+                this.getPlayer().getInventory().setWater(this.getAward());
+            }
             return true;
         } else {
             return false;
